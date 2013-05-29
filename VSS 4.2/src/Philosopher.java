@@ -8,15 +8,16 @@ public class Philosopher extends Thread implements Serializable
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1L;
-	private final Random	r						= new Random();
-	private Table			table;
-	private final String	name;
-	private final boolean	isHungry;
-	private boolean			isBlocked				= false;
-	private int				timesEaten;
-	private static int		nrOfHobbyPhilosophers	= 1;
-	private final int		maxWait;
+	private static final long	serialVersionUID		= 1L;
+	private final Random		r						= new Random();
+	private Table				table;
+	private final String		name;
+	private final boolean		isHungry;
+	private boolean				isBlocked				= false;
+	private int					timesEaten;
+
+	private static int			nrOfHobbyPhilosophers	= 1;
+	private final int			maxWait;
 
 	public Philosopher(final String name, Table t, boolean hungry)
 	{
@@ -119,6 +120,11 @@ public class Philosopher extends Thread implements Serializable
 	public int getTimesEaten()
 	{
 		return timesEaten;
+	}
+
+	public void setTimesEaten(int timesEaten)
+	{
+		this.timesEaten = timesEaten;
 	}
 
 	public void setBlocked(boolean isBlocked)

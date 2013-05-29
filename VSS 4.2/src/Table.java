@@ -5,7 +5,8 @@ public class Table extends Thread implements ITable
 	private ArrayList<Plate>		plates				= new ArrayList<Plate>();
 	private ArrayList<Philosopher>	philosophers		= new ArrayList<Philosopher>();
 	private ArrayList<Philosopher>	blockedPhilosophers	= new ArrayList<Philosopher>();
-	private int				size;
+	private int						size;
+	private int						median				= 0;
 
 	public Table(int numberOfPlates)
 	{
@@ -78,6 +79,7 @@ public class Table extends Thread implements ITable
 	public void addPhilosopher(Philosopher p)
 	{
 		p.setTable(this);
+		p.setTimesEaten(median);
 		philosophers.add(p);
 		p.start();
 		p.setBlocked(false);
@@ -91,7 +93,7 @@ public class Table extends Thread implements ITable
 	{
 		philosophers.add(p);
 	}
-	
+
 	public Philosopher removePhilosopher()
 	{
 		Philosopher p = null;
@@ -111,22 +113,23 @@ public class Table extends Thread implements ITable
 		{
 			if (philosophers.size() > 0)
 			{
-				int median = 0;
+				int med = 0;
 
 				// System.out.println(philosophers + "free");
 				// System.out.println(blockedPhilosophers + "blocked");
 				for (Philosopher p : philosophers)
 				{
-					//if (!blockedPhilosophers.contains(p))
-						median += p.getTimesEaten();
+					// if (!blockedPhilosophers.contains(p))
+					med += p.getTimesEaten();
 				}
 
-				median /= (philosophers.size() );//- blockedPhilosophers.size());
-				System.out.printf("%100s\n", "Median: " + median);
+				med /= (philosophers.size());// - blockedPhilosophers.size());
+				median = med;
+				System.out.printf("%100s\n", "Median: " + med);
 
 				for (Philosopher p : philosophers)
 				{
-					if (median > 1 && p.getTimesEaten() > 10 + median)
+					if (med > 1 && p.getTimesEaten() > 10 + med)
 					{
 						System.out.println("block");
 						p.setBlocked(true);
@@ -138,7 +141,7 @@ public class Table extends Thread implements ITable
 				ArrayList<Philosopher> toRemove = new ArrayList<Philosopher>();
 				for (Philosopher p : blockedPhilosophers)
 				{
-					if (p.getTimesEaten() <= median + 10)
+					if (p.getTimesEaten() <= med + 10)
 					{
 						p.setBlocked(false);
 						synchronized (p)
