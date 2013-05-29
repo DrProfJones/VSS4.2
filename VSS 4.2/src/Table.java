@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Table extends Thread
+public class Table extends Thread implements ITable
 {
 	private ArrayList<Plate>		plates				= new ArrayList<Plate>();
 	private ArrayList<Philosopher>	philosophers		= new ArrayList<Philosopher>();
@@ -33,16 +33,17 @@ public class Table extends Thread
 		Plate before = plates.get(0);
 		p.setNextPlate(before.getNextPlate());
 		before.setNextPlate(p);
+		// TODO was passiert wenn ein Philosoph an soeinem Platz am essen ist?
 	}
 
 	public void addPlate()
 	{
 		addPlate(new Plate());
 	}
-	
+
 	public boolean removePlate()
 	{
-		if(plates.size() > 1)
+		if (plates.size() > 1)
 		{
 			Plate before = plates.get(0);
 			Plate toRemove = before.getNextPlate();
@@ -51,8 +52,53 @@ public class Table extends Thread
 			plates.remove(toRemove);
 			return true;
 		}
-		
-		return false;	
+
+		return false;
+	}
+
+	public Plate getPlate(int i)
+	{
+		return plates.get(i);
+	}
+
+	public ArrayList<Plate> getPlates()
+	{
+		return plates;
+	}
+
+	public int getSize()
+	{
+		return size;
+	}
+
+	// Philosoph wirdzum essen gelassen, unabhängig davon ob er auf dem Ursprungsrechner geblockt war.
+	public void addPhilosopher(Philosopher p)
+	{
+		p.setTable(this);
+		philosophers.add(p);
+		p.start();
+		p.setBlocked(false);
+		synchronized (p)
+		{
+			p.notify();
+		}
+	}
+
+	public void registerPhilosopher(Philosopher p)
+	{
+		philosophers.add(p);
+	}
+	
+	public Philosopher removePhilosopher()
+	{
+		Philosopher p = null;
+		if (!philosophers.isEmpty())
+		{
+			p = philosophers.remove(0);
+			p.setBlocked(true);
+			blockedPhilosophers.remove(p);
+		}
+		return p;
 	}
 
 	@Override
@@ -64,8 +110,8 @@ public class Table extends Thread
 			{
 				int median = 0;
 
-//				System.out.println(philosophers + "free");
-//				System.out.println(blockedPhilosophers + "blocked");
+				// System.out.println(philosophers + "free");
+				// System.out.println(blockedPhilosophers + "blocked");
 				for (Philosopher p : philosophers)
 				{
 					if (!blockedPhilosophers.contains(p))
@@ -105,35 +151,12 @@ public class Table extends Thread
 			}
 			try
 			{
-				Thread.sleep(50);
+				Thread.sleep(250);
 			}
 			catch (InterruptedException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-
-	public Plate getPlate(int i)
-	{
-		return plates.get(i);
-	}
-
-	public ArrayList<Plate> getPlates()
-	{
-		return plates;
-	}
-
-	public int getSize()
-	{
-		return size;
-	}
-
-	public void addPhilosopher(Philosopher p)
-	{
-		philosophers.add(p);
-
-	}
-
 }

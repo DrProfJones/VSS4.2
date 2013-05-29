@@ -8,8 +8,9 @@ public class Client
 	public static void main(String[] args) throws RemoteException, NotBoundException
 	{
 		Registry registry = LocateRegistry.getRegistry();
-		IHello hello = (IHello) registry.lookup("Hello");
-		System.out.println("Sende \"Hallo\" an Server");
-		hello.hello("Hallo");
+		ITable tab = (ITable) registry.lookup("Table");
+		System.out.println("Sende Philosopher an Server");
+		Philosopher p = new Philosopher("ALU ALU ALU ALU ALU", null, false);
+		tab.addPhilosopher(p);
 	}
 }
