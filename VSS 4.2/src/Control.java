@@ -14,7 +14,7 @@ public class Control
 	private static final int NR_HUNGRY_PHILOSOPHERS = 0;
 	
 	private static final int NR_PLATES = 5;
-	public static final int MAXWAIT = 1000;
+	public static final int MAXWAIT = 100;
 	public static final boolean LOG = true;
 	private static long TSUM = 0;
 	private static long CSUM = 0;

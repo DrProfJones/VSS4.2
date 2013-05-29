@@ -5,7 +5,7 @@ public class Table extends Thread implements ITable
 	private ArrayList<Plate>		plates				= new ArrayList<Plate>();
 	private ArrayList<Philosopher>	philosophers		= new ArrayList<Philosopher>();
 	private ArrayList<Philosopher>	blockedPhilosophers	= new ArrayList<Philosopher>();
-	private final int				size;
+	private int				size;
 
 	public Table(int numberOfPlates)
 	{
@@ -33,6 +33,8 @@ public class Table extends Thread implements ITable
 		Plate before = plates.get(0);
 		p.setNextPlate(before.getNextPlate());
 		before.setNextPlate(p);
+		size++;
+		p.start();
 		// TODO was passiert wenn ein Philosoph an soeinem Platz am essen ist?
 	}
 
@@ -50,6 +52,7 @@ public class Table extends Thread implements ITable
 			before.setNextPlate(toRemove.getNextPlate());
 			toRemove.setNextPlate(null);
 			plates.remove(toRemove);
+			size--;
 			return true;
 		}
 
@@ -114,11 +117,11 @@ public class Table extends Thread implements ITable
 				// System.out.println(blockedPhilosophers + "blocked");
 				for (Philosopher p : philosophers)
 				{
-					if (!blockedPhilosophers.contains(p))
+					//if (!blockedPhilosophers.contains(p))
 						median += p.getTimesEaten();
 				}
 
-				median /= (philosophers.size() - blockedPhilosophers.size());
+				median /= (philosophers.size() );//- blockedPhilosophers.size());
 				System.out.printf("%100s\n", "Median: " + median);
 
 				for (Philosopher p : philosophers)
