@@ -8,26 +8,28 @@ public class Philosopher extends Thread implements Serializable
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID		= 1L;
-	private final Random		r						= new Random();
+	private static final long	serialVersionUID	= 1L;
+	private final Random		r					= new Random();
 	private Table				table;
 	private final String		name;
 	private final boolean		isHungry;
-	private boolean				isBlocked				= false;
+	private boolean				isBlocked			= false;
 	private int					timesEaten;
 
-	private static int			nrOfHobbyPhilosophers	= 1;
 	private final int			maxWait;
 
 	public Philosopher(final String name, Table t, boolean hungry)
 	{
 		this.table = t;
 		this.isHungry = hungry;
-
-		String tmpName = name == null ? "Hobby Philosoph " + nrOfHobbyPhilosophers++ : name;
-		tmpName += isHungry ? " H" : "";
-		this.name = tmpName;
+		this.name = name;
 		this.maxWait = isHungry ? Control.MAXWAIT / 3 : Control.MAXWAIT;
+	}
+
+	public Philosopher(Philosopher p)
+	{
+		this(p.name, p.table, p.isHungry);
+		this.timesEaten = p.timesEaten;
 	}
 
 	@Override

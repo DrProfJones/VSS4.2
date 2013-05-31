@@ -165,6 +165,30 @@ public class Table extends Thread implements ITable
 		}
 	}
 	
+	private void sendStatus()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void balanceLoad()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void checkPhilosophers()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void checkPlates()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void run()
 	{
@@ -173,8 +197,16 @@ public class Table extends Thread implements ITable
 		slowHungryPhilosophers();
 		
 		// Philosophen und Teller auf Leben überprüfen
+		checkPlates();
+		checkPhilosophers();
 		
-		// 
+		// Load von anderem System prüfen und ausbalancieren
+		balanceLoad();
+		
+		// eigenen Status an anderen Client senden
+		sendStatus();
+		
+		
 		
 	}
 
