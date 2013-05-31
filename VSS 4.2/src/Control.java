@@ -7,21 +7,17 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-public class Control
+public class Control extends Thread
 {
 
-	private static final int NR_PHILOSOPHERS = 2;
-	private static final int NR_HUNGRY_PHILOSOPHERS = 0;
+	private static final int NR_PHILOSOPHERS = 8;
+	private static final int NR_HUNGRY_PHILOSOPHERS = 2;
 	
 	private static final int NR_PLATES = 5;
 	public static final int MAXWAIT = 100;
 	public static final boolean LOG = true;
 	private static long TSUM = 0;
 	private static long CSUM = 0;
-	
-	
-	
-	
 	
 	public static void main(String[] args) throws IOException
 	{
@@ -63,6 +59,14 @@ public class Control
 		
 	}
 
+	@Override
+	public void run()
+	{
+		
+	}
+	
+	
+	
 	public synchronized static void perform(long l)
 	{
 		TSUM += l;

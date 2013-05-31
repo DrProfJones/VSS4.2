@@ -106,8 +106,7 @@ public class Table extends Thread implements ITable
 		return p;
 	}
 
-	@Override
-	public void run()
+	private void slowHungryPhilosophers()
 	{
 		while (true)
 		{
@@ -165,4 +164,18 @@ public class Table extends Thread implements ITable
 			}
 		}
 	}
+	
+	@Override
+	public void run()
+	{
+		
+		// philosophen, die zuviel essen werden gebremst
+		slowHungryPhilosophers();
+		
+		// Philosophen und Teller auf Leben überprüfen
+		
+		// 
+		
+	}
+
 }
