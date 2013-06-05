@@ -14,7 +14,7 @@ public class Control extends Thread
 	private static final int NR_HUNGRY_PHILOSOPHERS = 2;
 	
 	private static final int NR_PLATES = 5;
-	public static final int MAXWAIT = 100;
+	public static final int MAXWAIT = 2000;
 	public static final boolean LOG = true;
 	private static long TSUM = 0;
 	private static long CSUM = 0;
@@ -29,14 +29,14 @@ public class Control extends Thread
 		for (int i = 0; i < NR_PHILOSOPHERS; i++)
 		{
 			Philosopher p = new Philosopher(br.readLine(), table, false);
-			table.registerPhilosopher(p);
-			p.start();
+			table.addPhilosopher(p);
+		
 		}
 		for (int i = 0; i < NR_HUNGRY_PHILOSOPHERS; i++)
 		{
 			Philosopher p = new Philosopher(br.readLine(), table, true);
-			table.registerPhilosopher(p);
-			p.start();
+			table.addPhilosopher(p);
+			
 		}
 		
 
@@ -58,13 +58,6 @@ public class Control extends Thread
 	    System.out.println("Server läuft");
 		
 	}
-
-	@Override
-	public void run()
-	{
-		
-	}
-	
 	
 	
 	public synchronized static void perform(long l)

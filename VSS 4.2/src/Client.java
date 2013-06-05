@@ -31,7 +31,7 @@ public class Client
 		}
 		Thread.sleep(5000);
 
-		System.out.println("größe des tisches: " + tab.getSize());
+	
 
 	}
 }

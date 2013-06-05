@@ -142,7 +142,7 @@ public class Philosopher extends Thread implements Serializable
 	public void setTable(Table table)
 	{
 		this.table = table;
-		table.registerPhilosopher(this);
+//		table.registerPhilosopher(this);
 	}
 
 	public Table getTable()
